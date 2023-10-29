@@ -19,7 +19,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.apollo.graphql)
 }
 
 android {
@@ -51,12 +50,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    apollo {
-        service("service") {
-            packageName.set("com.test.fitnessstudios.feature.server")
-        }
-    }
-
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -65,7 +58,11 @@ android {
 dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
+    implementation(project(":core-domain"))
+    implementation(project(":core-network"))
     androidTestImplementation(project(":core-testing"))
+
+    implementation(platform(libs.compose.bom))
 
     // Core Android dependencies
     implementation(libs.androidx.activity.compose)
@@ -78,6 +75,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
+
+    implementation(libs.apollo.graphql)
+
+
     // Compose
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
@@ -87,10 +88,6 @@ dependencies {
     // Instrumented tests
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-    // GraphQL
-    implementation(libs.okhttp)
-    implementation(libs.apollo.graphql)
 
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
